@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const ScheduleForm = ({ fetchSchedules }) => {
-  const [schedule, setSchedule] = useState({ staffId: '', startTime: '', endTime: '' });
+  const [schedule, setSchedule] = useState({ startTime: '', endTime: '', department: '' });
 
   const handleChange = (e) => {
     setSchedule({ ...schedule, [e.target.name]: e.target.value });
@@ -21,7 +21,16 @@ const ScheduleForm = ({ fetchSchedules }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type="text" name="staffId" value={schedule.staffId} onChange={handleChange} placeholder="Staff ID" required />
+
+      <select name="department" id="department" onChange={handleChange}>
+        <option value="Audit">Audit</option>
+        <option value="Loan">Loan</option>
+        <option value="Customer Enquiry">Customer Enquiry</option>
+        <option value="Credit">Credit</option>
+      </select>
+
+      <br />
+
       <input type="datetime-local" name="startTime" value={schedule.startTime} onChange={handleChange} required />
       <input type="datetime-local" name="endTime" value={schedule.endTime} onChange={handleChange} required />
       <button type="submit">Add Schedule</button>

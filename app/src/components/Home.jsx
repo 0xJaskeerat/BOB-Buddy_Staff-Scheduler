@@ -19,23 +19,47 @@ const Home = () => {
     fetchSchedules();
   }, []);
 
+  function formatDate(inputDate) {
+    const date = new Date(inputDate);
+
+    // Extract date parts
+    const day = date.getDate();
+    const month = date.toLocaleString('en-US', { month: 'long' });
+    let hours = date.getHours();
+    const minutes = date.getMinutes();
+
+    // Format hours and minutes
+    const period = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12 || 12; // Convert to 12-hour format
+    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+
+    // Construct formatted date string
+    return `${day} ${month} ${hours}:${formattedMinutes} ${period}`;
+  }
+
   return (
     <div>
       <h1>Staff Scheduling</h1>
       <ScheduleForm fetchSchedules={fetchSchedules} />
 
-      <h3>Your scheduled appointments</h3>
-      <ul>
-        {schedules.length > 0 ? (
-          schedules.map((schedule) => (
-            <li key={schedule._id}>
-              {schedule.staffId}: {new Date(schedule.startTime).toLocaleString()} - {new Date(schedule.endTime).toLocaleString()}
-            </li>
-          ))
-        ) : (
-          <li>No schedules available</li>
-        )}
-      </ul>
+      {
+        schedules?.length > 0 &&
+        <>
+          <h2>Your scheduled appointments</h2>
+          <ul>
+            {schedules.length > 0 ? (
+              schedules?.map((schedule) => (
+                <li key={schedule._id} style={{ margin: '6px 0' }}>
+                  <p><b>Mr. {schedule.bankerName}</b> from <b>{schedule.department}</b> Department </p>
+                  <p>is available to connect from <b>{formatDate(new Date(schedule.startTime).toLocaleString())}</b> to <b>{formatDate(new Date(schedule.endTime).toLocaleString())}</b></p>
+                </li>
+              ))
+            ) : (
+              <li>No schedules available</li>
+            )}
+          </ul>
+        </>
+      }
     </div>
   );
 };
