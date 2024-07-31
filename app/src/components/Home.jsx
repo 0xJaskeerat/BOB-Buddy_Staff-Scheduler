@@ -23,6 +23,8 @@ const Home = () => {
     <div>
       <h1>Staff Scheduling</h1>
       <ScheduleForm fetchSchedules={fetchSchedules} />
+
+      <h3>Your scheduled appointments</h3>
       <ul>
         {schedules.length > 0 ? (
           schedules.map((schedule) => (
