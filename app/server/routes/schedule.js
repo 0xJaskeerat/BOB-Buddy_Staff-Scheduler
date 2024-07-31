@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
   });
   
 router.post('/', (req, res) => {
-    scheduleController.createSchedule
+    scheduleController.createSchedule(req, res)
 });
 
 router.put('/:id', scheduleController.updateSchedule);

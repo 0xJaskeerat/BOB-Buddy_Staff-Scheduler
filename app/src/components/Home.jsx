@@ -7,7 +7,7 @@ const Home = () => {
 
   const fetchSchedules = async () => {
     try {
-      const res = await axios.get('/api/schedule');
+      const res = await axios.get('http://localhost:8000/api/schedule');
       console.log('Fetched schedules:', res.data); // Log the response data
       setSchedules(Array.isArray(res.data) ? res.data : []); // Ensure the data is an array
     } catch (err) {

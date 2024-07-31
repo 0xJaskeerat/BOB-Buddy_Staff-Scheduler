@@ -3,19 +3,26 @@ const Schedule = require('../models/Schedule');
 
 exports.createSchedule = async (req, res) => {
   try {
-    const newSchedule = new Schedule(req.body);
+    console.log('Received data:', req.body); // Log the received data
+    const newSchedule = new Schedule({
+      staffId: req.body.staffId,
+      startTime: req.body.startTime,
+      endTime: req.body.endTime,
+    });
     const schedule = await newSchedule.save();
     res.json(schedule);
   } catch (err) {
+    console.error('Error creating schedule:', err); // Log error
     res.status(500).json({ error: err.message });
   }
 };
 
 exports.getSchedules = async (req, res) => {
   try {
-    const schedules = await Schedule.find();
+    const schedules = await Schedule.find().select('staffId startTime endTime'); // Select specific fields
     res.json(schedules);
   } catch (err) {
+    console.error('Error fetching schedules:', err); // Log error
     res.status(500).json({ error: err.message });
   }
 };

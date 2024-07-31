@@ -12,7 +12,7 @@ const ScheduleForm = ({ fetchSchedules }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('/api/schedule', schedule);
+      await axios.post('http://localhost:8000/api/schedule', schedule);
       fetchSchedules();
     } catch (err) {
       console.error(err);
